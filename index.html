@@ -66,9 +66,12 @@ nav a:hover{background:var(--sky)}
 .btn-yolk:hover{background:#ffc928}
 .btn-line{border-color:#5f8f8c;color:#f2f8f6;background:transparent}
 .btn-line:hover{background:#12595c}
-.stage{background:#0d4245;border-radius:var(--radius) var(--radius) 0 0;padding:18px 18px 0}
-.stage svg{display:block;width:100%;height:auto}
-.stage-cap{font-size:.9rem;color:#9fc3bf;padding:10px 4px 14px}
+.hero-grid{grid-template-columns:1fr!important}
+.hero-grid>div{max-width:760px}
+.hero-plan{margin-top:40px}
+.hero .plan-wrap{border-color:#1b6a6d;box-shadow:0 12px 40px rgba(0,0,0,.28)}
+.hero .plan-ctl span{color:#9fc3bf}
+.hero .plan-ctl{margin-bottom:8px}
 .hero-strip{margin-top:48px;background:var(--yolk);color:#1d1700}
 .hero-strip .wrap{display:flex;flex-wrap:wrap;gap:12px 36px;padding:16px 0;font-weight:600}
 
@@ -243,7 +246,6 @@ dialog::backdrop{background:rgba(5,25,27,.65)}
         <li><a href="#activities">Activities &amp; Projects</a></li>
         <li><a href="#designs">Designs</a></li>
         <li><a href="#team">Team</a></li>
-        <li><a href="#workspace">Workspace</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -261,10 +263,13 @@ dialog::backdrop{background:rgba(5,25,27,.65)}
           <a class="btn btn-line" href="#profile">Read our profile</a>
         </div>
       </div>
-      <div class="stage" aria-label="Animation of eggs being sorted into five weight bins">
-        <svg id="sorter" viewBox="0 0 560 330" role="img" aria-label="Eggs travel along a belt and drop into Small, Medium, Large, Extra-Large and Jumbo bins"></svg>
-        <div class="stage-cap">Eggs are weighed on the belt, then dropped into the bin for their size.</div>
+    </div>
+    <div class="wrap hero-plan" id="workspace">
+      <div class="plan-wrap" id="planWrap">
+        <svg id="plan" viewBox="0 0 800 520" role="img" aria-label="Animated floor plan of the E. A. S. T Eggsort workspace: team members walk between the office desk, the prototype station, the audit table, and the documentation desk, and talk to each other."></svg>
+        <div id="bubbles" aria-hidden="true"></div>
       </div>
+      <div class="plan-ctl"><button class="btn btn-yolk" id="planBtn" type="button">Pause animation</button><span id="wsIntro"></span></div>
     </div>
     <div class="hero-strip"><div class="wrap" id="heroStrip"></div></div>
   </div>
@@ -319,18 +324,6 @@ dialog::backdrop{background:rgba(5,25,27,.65)}
       <h2>The team</h2>
       <p class="lead" style="margin-top:14px" id="teamIntro"></p>
       <ul class="team-list" id="teamList"></ul>
-    </div>
-  </section>
-
-  <section id="workspace" class="ws">
-    <div class="wrap">
-      <h2>Our workspace</h2>
-      <p class="lead" style="margin-top:14px" id="wsIntro"></p>
-      <div class="plan-wrap" id="planWrap">
-        <svg id="plan" viewBox="0 0 800 520" role="img" aria-label="Animated floor plan of the E. A. S. T Eggsort workspace: team members walk between the office desk, the prototype station, the audit table, and the documentation desk, and talk to each other."></svg>
-        <div id="bubbles" aria-hidden="true"></div>
-      </div>
-      <div class="plan-ctl"><button class="btn btn-yolk" id="planBtn" type="button">Pause animation</button><span id="planLegend"></span></div>
     </div>
   </section>
 
@@ -497,7 +490,7 @@ const CONTENT = {
     { title: "Sorting bins, top view", caption: "Top view: servo gates direct each egg into its size bin.", img: "protoTop" },
     { title: "Complete EGGSor+ prototype", caption: "Side view of the full prototype on its table.", img: "protoSide" }
   ],
-  workspaceIntro: "A top-down view of our workspace. Watch the team move between the office desk, the prototype station, the audit table, and the documentation desk.",
+  workspaceIntro: "Our workspace, seen from above: the team moves between the office desk, the prototype station, the audit table, and the documentation desk.",
   teamIntro: "The students behind E. A. S. T Eggsort.",
   /* station options: "laptop", "office", "docs", "maintenance", "audit"
      photo options: face1 to face4 (the pictures embedded in this file) */
@@ -868,7 +861,6 @@ C.team.forEach((t, i) => {
   });
   const legend = [];
   Object.keys(people).forEach(k => legend.push(C.team[WHO[k]].name.split(" ")[0] + " (" + C.team[WHO[k]].role.toLowerCase() + ")"));
-  $("planLegend").textContent = legend.join(", ");
 
   /* clock */
   let running = !matchMedia("(prefers-reduced-motion: reduce)").matches, visible = true, t0 = performance.now(), offset = running ? 0 : 0, last = performance.now(), frozenAt = 0, force = null;
@@ -937,72 +929,6 @@ menuBtn.addEventListener("click", () => {
 });
 navList.addEventListener("click", e => { if (e.target.tagName === "A") { navList.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); } });
 
-/* ---------- hero egg sorter animation ---------- */
-(function sorter() {
-  const NS = "http://www.w3.org/2000/svg";
-  const svg = $("sorter");
-  const mk = (t, a) => { const n = document.createElementNS(NS, t); for (const k in a) n.setAttribute(k, a[k]); return n; };
-  const bins = C.sizes.map(s => s.name === "Extra-Large" ? "XL" : s.name.charAt(0) === "J" ? "Jumbo" : s.name.charAt(0));
-  const cx = [70, 175, 280, 385, 490], scale = [.62, .74, .86, .98, 1.12];
-  const BELT_Y = 70, BIN_TOP = 190, BIN_BOTTOM = 318;
-
-  svg.append(mk("rect", { x: 0, y: BELT_Y + 22, width: 560, height: 12, rx: 6, fill: "#1b6a6d" }));
-  for (let x = 8; x < 560; x += 28) svg.append(mk("rect", { x, y: BELT_Y + 24, width: 14, height: 8, rx: 3, fill: "#0d4245" }));
-  cx.forEach((x, i) => {
-    svg.append(mk("path", { d: `M${x - 44},${BIN_TOP} L${x - 38},${BIN_BOTTOM} L${x + 38},${BIN_BOTTOM} L${x + 44},${BIN_TOP}`, fill: "none", stroke: "#7fb5b1", "stroke-width": 3, "stroke-linejoin": "round" }));
-    const t = mk("text", { x, y: BIN_BOTTOM - 8, "text-anchor": "middle", fill: "#bcd5d2", "font-size": 15, "font-family": "Figtree, sans-serif", "font-weight": 600 });
-    t.textContent = bins[i]; svg.append(t);
-    const w = mk("text", { x, y: BIN_TOP - 10, "text-anchor": "middle", fill: "#7fb5b1", "font-size": 11.5, "font-family": "Figtree, sans-serif" });
-    w.textContent = C.sizes[i].range; svg.append(w);
-  });
-
-  const eggD = "M0,-22 C12,-22 20,-4 20,8 C20,20 11,26 0,26 C-11,26 -20,20 -20,8 C-20,-4 -12,-22 0,-22Z";
-  const shells = ["#f4e3c8", "#efd5b0", "#f9ecd6", "#e8caa0"];
-  const stacks = [0, 0, 0, 0, 0];
-  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function drawStatic() {
-    cx.forEach((x, i) => { for (let k = 0; k < 2; k++) {
-      const g = mk("path", { d: eggD, fill: shells[(i + k) % 4], transform: `translate(${x - 14 + k * 28},${BIN_BOTTOM - 40}) scale(${scale[i] * .8})` });
-      svg.append(g);
-    } });
-  }
-  if (reduce) { drawStatic(); return; }
-
-  function spawn() {
-    const i = Math.floor(Math.random() * 5);
-    const g = mk("path", { d: eggD, fill: shells[Math.floor(Math.random() * 4)] });
-    svg.append(g);
-    const sc = scale[i] * .8, startX = -30, t0 = performance.now();
-    const travel = (cx[i] - startX) * 7.5;      /* ms to reach the bin */
-    const fall = 520;
-    const rest = BIN_BOTTOM - 38 - stacks[i] * 22 * sc;
-    function step(now) {
-      const t = now - t0;
-      if (t < travel) {
-        const x = startX + (cx[i] - startX) * (t / travel);
-        g.setAttribute("transform", `translate(${x},${BELT_Y}) rotate(${t * .05}) scale(${sc})`);
-      } else if (t < travel + fall) {
-        const p = (t - travel) / fall;
-        const y = BELT_Y + (rest - BELT_Y) * p * p;
-        g.setAttribute("transform", `translate(${cx[i]},${y}) scale(${sc})`);
-      } else {
-        g.setAttribute("transform", `translate(${cx[i]},${rest}) scale(${sc})`);
-        g.setAttribute("data-bin", i);
-        stacks[i]++;
-        if (stacks[i] >= 3) { stacks[i] = 0; setTimeout(() => svg.querySelectorAll(`[data-bin="${i}"]`).forEach(n => n.remove()), 700); }
-        return;
-      }
-      requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-  let timer = setInterval(spawn, 1300);
-  spawn();
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) clearInterval(timer); else timer = setInterval(spawn, 1300);
-  });
-})();
 </script>
 </body>
 </html>
