@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,10 +47,10 @@ section{padding:clamp(56px,9vw,104px) 0}
 /* header */
 header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--shell) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.15rem;text-decoration:none}
+.brand{white-space:nowrap;display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.15rem;text-decoration:none}
 .brand svg{width:26px;height:30px}
 nav ul{display:flex;gap:4px;list-style:none;margin:0;padding:0}
-nav a{display:block;padding:8px 12px;border-radius:999px;text-decoration:none;font-weight:500;font-size:.97rem}
+nav a{white-space:nowrap;display:block;padding:8px 10px;border-radius:999px;text-decoration:none;font-weight:500;font-size:.97rem}
 nav a:hover{background:var(--sky)}
 .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font:inherit;color:inherit;cursor:pointer}
 
@@ -125,12 +124,75 @@ nav a:hover{background:var(--sky)}
 .zoom .dlg{padding:18px 22px}
 .zoom h3{font-size:1.2rem;margin-bottom:6px}
 /* team */
-.team-list{list-style:none;padding:0;margin:32px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.team-list li{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;gap:14px;align-items:center}
-.avatar{flex:none;width:72px;height:72px;border-radius:50%;background:var(--yolk);color:#1d1700;display:grid;place-items:center;font-family:var(--display);font-weight:800;overflow:hidden}
-.avatar img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block}
-.team-list b{display:block}
-.team-list small{color:var(--ink-soft)}
+.team-list{list-style:none;padding:0;margin:36px 0 0;display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.team-list li{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.scene{display:block;width:100%;height:auto}
+.member{padding:16px 20px 20px}
+.member b{display:block;font-family:var(--display);font-size:1.2rem}
+.member .chip{display:inline-block;margin:6px 0 8px;font-size:.82rem;font-weight:600;background:var(--yolk-soft);color:#4a3a00;border-radius:999px;padding:2px 12px}
+.member p{margin:0;color:var(--ink-soft);font-size:.98rem}
+
+/* scene animation */
+.scene .head{transform-box:fill-box;transform-origin:50% 100%;animation:headBob 2.6s ease-in-out infinite}
+.st-audit .head{animation:headLook 4.8s ease-in-out infinite}
+.st-maintenance .head{animation:headWork 1.6s ease-in-out infinite}
+.st-docs .head{animation:headWrite 3.2s ease-in-out infinite}
+@keyframes headBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-3px) rotate(2.5deg)}}
+@keyframes headLook{0%,100%{transform:translateX(-7px) rotate(-6deg)}50%{transform:translateX(7px) rotate(6deg)}}
+@keyframes headWork{0%,100%{transform:translateY(0) rotate(3deg)}50%{transform:translateY(3px) rotate(-3deg)}}
+@keyframes headWrite{0%,100%{transform:translateY(2px) rotate(-3deg)}50%{transform:translateY(4px) rotate(3deg)}}
+.arm-a{animation:armA .45s ease-in-out infinite alternate}
+.arm-b{animation:armA .45s ease-in-out -.22s infinite alternate}
+.arm-wrench{animation:armW .7s ease-in-out infinite alternate}
+.arm-write{animation:armWrite .38s ease-in-out infinite alternate}
+.arm-hold{animation:armHold 2.4s ease-in-out infinite alternate}
+@keyframes armA{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+@keyframes armW{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+@keyframes armWrite{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+@keyframes armHold{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+.bar{transform-box:fill-box;transform-origin:50% 100%;animation:barGrow 2.2s ease-in-out infinite alternate}
+.bar:nth-of-type(2){animation-delay:-.7s}.bar:nth-of-type(3){animation-delay:-1.4s}.bar:nth-of-type(4){animation-delay:-.3s}
+@keyframes barGrow{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
+.glow{animation:glow 2s ease-in-out infinite}
+@keyframes glow{50%{opacity:.45}}
+.steam{animation:steam 2.4s ease-in-out infinite}
+@keyframes steam{0%{opacity:0;transform:translateY(6px)}50%{opacity:.9}100%{opacity:0;transform:translateY(-8px)}}
+.clk{transform-box:view-box;animation:spin 12s linear infinite}
+.gear{transform-box:fill-box;transform-origin:50% 50%;animation:spin 3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.belt{animation:belt .6s linear infinite}
+@keyframes belt{to{stroke-dashoffset:-20}}
+.belt-egg{animation:beltEgg 3.6s linear infinite}
+@keyframes beltEgg{0%{transform:translateX(0);opacity:0}8%{opacity:1}92%{opacity:1}100%{transform:translateX(150px);opacity:0}}
+.spark{animation:blink .5s steps(2) infinite}
+.spark:nth-of-type(2){animation-delay:-.25s}
+@keyframes blink{50%{opacity:0}}
+.mag{animation:magMove 3.4s ease-in-out infinite alternate}
+@keyframes magMove{from{transform:translateX(0)}to{transform:translateX(62px)}}
+.chk{opacity:0;animation:chk 6s ease-in-out infinite}
+.chk.c2{animation-delay:1.4s}.chk.c3{animation-delay:2.8s}
+@keyframes chk{0%,6%{opacity:0}14%,80%{opacity:1}92%,100%{opacity:0}}
+.fly{animation:fly 3.4s ease-in infinite}
+@keyframes fly{0%{transform:translate(0,0) rotate(0);opacity:0}15%{opacity:1}100%{transform:translate(-20px,-70px) rotate(-25deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.scene *{animation:none!important}.chk{opacity:1}}
+@media (max-width:860px){.team-list{grid-template-columns:1fr}}
+
+/* workspace plan */
+.ws{background:var(--sky)}
+.plan-wrap{position:relative;margin-top:32px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#e6efec}
+.plan-wrap svg{display:block;width:100%;height:auto}
+.bubble{position:absolute;transform:translate(-50%,-100%);background:#fff;color:#10292b;border:2px solid #0f4c4f;border-radius:12px;padding:5px 9px;font-size:clamp(9px,1.5vw,13px);line-height:1.3;font-weight:500;width:max-content;max-width:25%;opacity:0;transition:opacity .2s;pointer-events:none;box-shadow:0 2px 6px rgba(0,0,0,.15);z-index:2}
+.bubble::after{content:"";position:absolute;left:50%;bottom:-8px;margin-left:-6px;border:6px solid transparent;border-top-color:#0f4c4f;border-bottom:0}
+.bubble.on{opacity:1}
+.plan-ctl{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:18px}
+.plan-ctl span{color:var(--ink-soft);font-size:.95rem}
+.ws .btn-yolk{border:2px solid transparent}
+.cur{animation:blink .9s steps(2) infinite}
+.belt2{animation:belt .6s linear infinite}
+.egg2{animation:egg2 3.6s linear infinite}
+@keyframes egg2{0%{transform:translateX(0);opacity:0}8%{opacity:1}92%{opacity:1}100%{transform:translateX(220px);opacity:0}}
+.pgear{transform-box:fill-box;transform-origin:50% 50%;animation:spin 3s linear infinite}
+@media (prefers-reduced-motion:reduce){.plan-wrap *{animation:none!important}}
 
 /* contact */
 .contact{background:var(--teal-deep);color:#f2f8f6}
@@ -149,6 +211,11 @@ dialog::backdrop{background:rgba(5,25,27,.65)}
 .dlg .btn-line:hover{background:var(--sky)}
 .note{font-size:.92rem;color:var(--ink-soft);background:var(--yolk-soft);border-radius:10px;padding:10px 14px}
 
+@media (max-width:1060px){
+  .menu-btn{display:block}
+  nav ul{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--shell);border-bottom:1px solid var(--line);padding:10px 4%}
+  nav ul.open{display:flex}
+}
 @media (max-width:860px){
   .hero-grid,.profile-grid,.mv-grid,.act-list,.photo-grid{grid-template-columns:1fr}
   .menu-btn{display:block}
@@ -176,6 +243,7 @@ dialog::backdrop{background:rgba(5,25,27,.65)}
         <li><a href="#activities">Activities &amp; Projects</a></li>
         <li><a href="#designs">Designs</a></li>
         <li><a href="#team">Team</a></li>
+        <li><a href="#workspace">Workspace</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -251,6 +319,18 @@ dialog::backdrop{background:rgba(5,25,27,.65)}
       <h2>The team</h2>
       <p class="lead" style="margin-top:14px" id="teamIntro"></p>
       <ul class="team-list" id="teamList"></ul>
+    </div>
+  </section>
+
+  <section id="workspace" class="ws">
+    <div class="wrap">
+      <h2>Our workspace</h2>
+      <p class="lead" style="margin-top:14px" id="wsIntro"></p>
+      <div class="plan-wrap" id="planWrap">
+        <svg id="plan" viewBox="0 0 800 520" role="img" aria-label="Animated floor plan of the E. A. S. T Eggsort workspace: team members walk between the office desk, the prototype station, the audit table, and the documentation desk, and talk to each other."></svg>
+        <div id="bubbles" aria-hidden="true"></div>
+      </div>
+      <div class="plan-ctl"><button class="btn btn-yolk" id="planBtn" type="button">Pause animation</button><span id="planLegend"></span></div>
     </div>
   </section>
 
@@ -417,12 +497,15 @@ const CONTENT = {
     { title: "Sorting bins, top view", caption: "Top view: servo gates direct each egg into its size bin.", img: "protoTop" },
     { title: "Complete EGGSor+ prototype", caption: "Side view of the full prototype on its table.", img: "protoSide" }
   ],
+  workspaceIntro: "A top-down view of our workspace. Watch the team move between the office desk, the prototype station, the audit table, and the documentation desk.",
   teamIntro: "The students behind E. A. S. T Eggsort.",
+  /* station options: "laptop", "office", "docs", "maintenance", "audit"
+     photo options: face1 to face4 (the pictures embedded in this file) */
   team: [
-    { name: "Lira Angela R. Ata", role: "Team member", photo: "face1" },
-    { name: "Jhon Paulo Boiser", role: "Team member", photo: "face4" },
-    { name: "Jomhar M. Condicion", role: "Team member", photo: "face3" },
-    { name: "Eloisa Joyce D. Creencia", role: "Team member", photo: "face2" }
+    { name: "Lira Angela R. Ata", role: "Office work", station: "laptop", task: "Works on her laptop to update records and watch the monitoring dashboard.", photo: "face1" },
+    { name: "Jhon Paulo Boiser", role: "Machine maintenance", station: "maintenance", task: "Keeps the conveyor, servos, and sensors of the prototype running.", photo: "face4" },
+    { name: "Jomhar M. Condicion", role: "Quality audit", station: "audit", task: "Checks eggs and test results against the farm's size classes.", photo: "face3" },
+    { name: "Eloisa Joyce D. Creencia", role: "Documentation", station: "docs", task: "Writes the reports, forms, and research documents.", photo: "face2" }
   ],
 
   contactText: "Want to see EGGSor+ or work with us? Send us an email at 23-78520@g.batstate-u.edu.ph.",
@@ -515,16 +598,328 @@ zoom.addEventListener("click", e => { if (e.target === zoom) zoom.close(); });
 
 /* team + contact */
 $("teamIntro").textContent = C.teamIntro;
-C.team.forEach(t => {
-  const initials = t.name.split(" ").filter(Boolean).map(w => w[0]).slice(0, 2).join("");
+/* animated team scenes */
+const HEADS = {
+  face1: { cx: 205, cy: 135, r: 95, outfit: "#1f2f45", skin: "#d49a74" },
+  face2: { cx: 207, cy: 152, r: 95, outfit: "#20242b", skin: "#d9a881" },
+  face3: { cx: 205, cy: 150, r: 92, outfit: "#1d2a4a", skin: "#d9a47c" },
+  face4: { cx: 211, cy: 150, r: 95, outfit: "#16181d", skin: "#e2b690" }
+};
+const SVGNS = "http://www.w3.org/2000/svg";
+const arm = (sx, sy, deg, len, cls, c, skin, extra = "") =>
+  `<g transform="translate(${sx},${sy}) rotate(${deg})"><g class="${cls}"><rect x="-11" y="-8" width="22" height="${len + 8}" rx="11" fill="${c}"/>${extra}<circle cx="0" cy="${len}" r="11" fill="${skin}"/></g></g>`;
+const body = (c, skin) =>
+  `<rect x="149" y="128" width="22" height="38" rx="8" fill="${skin}"/>
+   <path d="M86,280 L96,180 Q160,152 224,180 L234,280Z" fill="${c}"/>
+   <path d="M144,162 L160,200 L176,162Z" fill="#fff"/>
+   <path d="M144,162 L160,200 M176,162 L160,200" stroke="rgba(0,0,0,.35)" stroke-width="2" fill="none"/>`;
+const officeWall = `<rect width="320" height="280" fill="#d7ecef"/>
+  <rect x="18" y="22" width="72" height="56" rx="4" fill="#bfe3f2" stroke="#fff" stroke-width="5"/><path d="M54,22V78M18,50H90" stroke="#fff" stroke-width="4"/>
+  <circle cx="268" cy="44" r="18" fill="#fff" stroke="#0f4c4f" stroke-width="4"/>
+  <g transform="translate(268,44)"><line x1="0" y1="0" x2="7" y2="0" stroke="#10292b" stroke-width="2.5" stroke-linecap="round"/><g class="clk"><line x1="0" y1="0" x2="0" y2="-12" stroke="#10292b" stroke-width="2.5" stroke-linecap="round"/></g></g>`;
+const desk = `<rect x="0" y="232" width="320" height="14" fill="#c99a63"/><rect x="0" y="246" width="320" height="34" fill="#a97a46"/>`;
+
+const SCENES = {
+  office: (c, skin) => officeWall + `
+    <rect x="228" y="138" width="86" height="64" rx="5" fill="#10292b"/><rect x="234" y="144" width="74" height="52" rx="2" fill="#e8f6f6"/>
+    <g><rect class="bar" x="242" y="150" width="10" height="40" fill="#0f4c4f"/><rect class="bar" x="258" y="150" width="10" height="40" fill="#f6b800"/><rect class="bar" x="274" y="150" width="10" height="40" fill="#0f4c4f"/><rect class="bar" x="290" y="150" width="10" height="40" fill="#f6b800"/></g>
+    <rect x="263" y="202" width="14" height="30" fill="#6c7f80"/>` + body(c, skin) + desk + `
+    <rect x="30" y="212" width="22" height="22" rx="3" fill="#fff"/><path d="M52,217 q10,0 10,8 q0,8 -10,8" stroke="#fff" stroke-width="4" fill="none"/>
+    <path class="steam" d="M36,206 q-4,-6 0,-12 q4,-6 0,-12" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <rect x="112" y="229" width="76" height="12" rx="3" fill="#f5f7f7" stroke="#9fb3b3"/><path d="M118,235H182" stroke="#9fb3b3" stroke-width="4" stroke-dasharray="3 3"/>` +
+    arm(100, 178, -31, 66, "arm-a", c, skin) + arm(220, 178, 31, 66, "arm-b", c, skin),
+
+  laptop: (c, skin) => officeWall + body(c, skin) + `
+    <rect x="104" y="190" width="112" height="72" rx="7" fill="#4b5b5e" stroke="#2f3c3e" stroke-width="3"/>
+    <path class="glow" d="M160,208 C150,208 144,220 144,231 C144,242 151,248 160,248 C169,248 176,242 176,231 C176,220 170,208 160,208Z" fill="#f6b800"/>
+    <rect x="96" y="262" width="128" height="6" rx="3" fill="#2f3c3e"/>` +
+    arm(98, 180, -7, 72, "arm-a", c, skin) + arm(222, 180, 7, 72, "arm-b", c, skin),
+
+  docs: (c, skin) => officeWall + `
+    <path d="M30,232 L30,224 L56,224 L56,232Z" fill="#6c7f80"/><path d="M43,224 L58,184 L92,172" stroke="#6c7f80" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M86,166 L104,172 L96,186Z" fill="#6c7f80"/><path d="M94,184 L70,232 L130,232Z" fill="#f6b800" opacity=".18"/>` + body(c, skin) + desk + `
+    <rect x="240" y="216" width="58" height="16" fill="#fff" stroke="#9fb3b3"/><rect x="244" y="209" width="58" height="8" fill="#fff" stroke="#9fb3b3"/>
+    <g class="fly"><rect x="250" y="196" width="26" height="18" fill="#fff" stroke="#9fb3b3"/><path d="M254,202H272M254,207H268" stroke="#9fb3b3" stroke-width="2"/></g>
+    <path d="M108,232 L198,232 L208,244 L98,244Z" fill="#fff" stroke="#9fb3b3"/><path d="M116,237H190" stroke="#9fb3b3" stroke-width="2" stroke-dasharray="6 3"/>` +
+    arm(100, 178, -17, 62, "arm-hold", c, skin) +
+    arm(220, 178, 40, 78, "arm-write", c, skin, `<line x1="0" y1="78" x2="-9" y2="96" stroke="#10292b" stroke-width="3.5" stroke-linecap="round"/>`),
+
+  maintenance: (c, skin) => `<rect width="320" height="280" fill="#cfdad6"/>
+    <rect x="14" y="18" width="116" height="70" rx="4" fill="#e9efe9" stroke="#9fb3ad"/>
+    <path d="M32,30V70" stroke="#6c7f80" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="74" r="6" fill="none" stroke="#6c7f80" stroke-width="4"/>
+    <path d="M62,30V62" stroke="#6c7f80" stroke-width="5" stroke-linecap="round"/><rect x="55" y="62" width="14" height="14" rx="3" fill="#6c7f80"/>
+    <path d="M96,30V70" stroke="#f6b800" stroke-width="6" stroke-linecap="round"/><path d="M90,70h12" stroke="#f6b800" stroke-width="6" stroke-linecap="round"/>
+    <rect y="248" width="320" height="32" fill="#9db5b0"/>` + body(c, skin) + `
+    <rect x="14" y="192" width="94" height="88" rx="6" fill="#26343a"/>
+    <circle class="gear" cx="60" cy="226" r="15" fill="none" stroke="#f6b800" stroke-width="8" stroke-dasharray="5 4"/><circle cx="60" cy="226" r="7" fill="#26343a"/>
+    <circle cx="26" cy="204" r="4" fill="#6ee7a0" class="spark"/>
+    <rect x="120" y="262" width="8" height="18" fill="#26343a"/><rect x="290" y="262" width="8" height="18" fill="#26343a"/>
+    <rect x="104" y="236" width="210" height="26" rx="4" fill="#1d6b3a"/>
+    <line class="belt" x1="112" y1="249" x2="308" y2="249" stroke="#0e4a27" stroke-width="14" stroke-dasharray="10 10"/>
+    <g class="belt-egg"><ellipse cx="128" cy="226" rx="8" ry="10" fill="#f1d9b5"/></g>` +
+    arm(100, 180, 30, 40, "arm-a", c, skin) +
+    arm(220, 180, 12, 62, "arm-wrench", c, skin, `<g transform="translate(0,62) rotate(38)"><rect x="-3.5" y="-2" width="7" height="34" rx="3" fill="#aab8b8"/><circle cx="0" cy="34" r="9" fill="#aab8b8"/><rect x="-3.5" y="28" width="7" height="12" fill="#cfdad6"/></g>`) +
+    `<circle class="spark" cx="226" cy="238" r="3" fill="#f6b800"/><circle class="spark" cx="238" cy="230" r="2.5" fill="#f6b800"/><circle class="spark" cx="232" cy="246" r="2" fill="#f6b800"/>`,
+
+  audit: (c, skin) => `<rect width="320" height="280" fill="#e3ecf2"/>
+    <rect x="18" y="16" width="100" height="66" rx="4" fill="#fff" stroke="#9fb3b3"/>
+    <g><rect class="bar" x="30" y="30" width="12" height="44" fill="#0f4c4f"/><rect class="bar" x="50" y="30" width="12" height="44" fill="#f6b800"/><rect class="bar" x="70" y="30" width="12" height="44" fill="#0f4c4f"/><rect class="bar" x="90" y="30" width="12" height="44" fill="#f6b800"/></g>
+    <rect x="0" y="250" width="320" height="30" fill="#a97a46"/>
+    <rect x="18" y="236" width="104" height="16" rx="4" fill="#e0d6c3"/>
+    <g fill="#f4e3c8"><ellipse cx="36" cy="232" rx="8" ry="10"/><ellipse cx="56" cy="232" rx="8" ry="10"/><ellipse cx="76" cy="232" rx="8" ry="10"/><ellipse cx="96" cy="232" rx="8" ry="10"/><ellipse cx="114" cy="232" rx="8" ry="10"/></g>
+    <path d="M74,224 l4,6 l-4,5" stroke="#8a6b3f" stroke-width="1.6" fill="none"/>
+    <g transform="translate(34,222)"><g class="mag"><circle cx="0" cy="0" r="14" fill="rgba(220,240,255,.5)" stroke="#10292b" stroke-width="3.5"/><line x1="10" y1="10" x2="26" y2="26" stroke="#10292b" stroke-width="5" stroke-linecap="round"/></g></g>` + body(c, skin) +
+    arm(100, 178, -18, 62, "arm-hold", c, skin) + `
+    <g transform="rotate(-3 160 216)"><rect x="118" y="176" width="84" height="80" rx="6" fill="#c99a63"/><rect x="126" y="186" width="68" height="64" rx="3" fill="#fff"/><rect x="144" y="170" width="32" height="13" rx="4" fill="#6c7f80"/>
+    <rect x="132" y="196" width="9" height="9" fill="none" stroke="#0f4c4f" stroke-width="2"/><path d="M146,201H186" stroke="#9fb3b3" stroke-width="3"/>
+    <rect x="132" y="212" width="9" height="9" fill="none" stroke="#0f4c4f" stroke-width="2"/><path d="M146,217H182" stroke="#9fb3b3" stroke-width="3"/>
+    <rect x="132" y="228" width="9" height="9" fill="none" stroke="#0f4c4f" stroke-width="2"/><path d="M146,233H180" stroke="#9fb3b3" stroke-width="3"/>
+    <path class="chk c1" d="M133,200 l3,4 l6,-8" stroke="#1d9a5a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path class="chk c2" d="M133,216 l3,4 l6,-8" stroke="#1d9a5a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path class="chk c3" d="M133,232 l3,4 l6,-8" stroke="#1d9a5a" stroke-width="3" fill="none" stroke-linecap="round"/></g>` +
+    arm(220, 178, 34, 62, "arm-write", c, skin, `<line x1="0" y1="62" x2="-8" y2="78" stroke="#10292b" stroke-width="3.5" stroke-linecap="round"/>`)
+};
+
+function buildScene(t, i) {
+  const hd = HEADS[t.photo] || { cx: 210, cy: 150, r: 95, outfit: "#1f2f45", skin: "#d9a47c" };
+  const station = SCENES[t.station] ? t.station : "office";
+  const svg = document.createElementNS(SVGNS, "svg");
+  svg.setAttribute("viewBox", "0 0 320 280");
+  svg.setAttribute("class", "scene st-" + station);
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", t.name + ": " + t.role);
+  svg.innerHTML = SCENES[station](hd.outfit, hd.skin) + `<g class="head" id="head${i}"></g>`;
+  const head = svg.querySelector("#head" + i);
+  const R = 44, hx = 160, hy = 98, src = t.photo ? (IMG[t.photo] || t.photo) : "";
+  head.innerHTML = `<clipPath id="clip${i}"><circle cx="${hx}" cy="${hy}" r="${R}"/></clipPath><circle cx="${hx}" cy="${hy}" r="${R + 3}" fill="#fff"/>`;
+  if (src) {
+    const k = R / hd.r, im = document.createElementNS(SVGNS, "image");
+    im.setAttribute("href", src);
+    im.setAttribute("width", 420 * k); im.setAttribute("height", 420 * k);
+    im.setAttribute("x", hx - hd.cx * k); im.setAttribute("y", hy - hd.cy * k);
+    im.setAttribute("clip-path", `url(#clip${i})`);
+    head.append(im);
+  } else {
+    const tx = document.createElementNS(SVGNS, "text");
+    tx.setAttribute("x", hx); tx.setAttribute("y", hy + 8); tx.setAttribute("text-anchor", "middle");
+    tx.setAttribute("font-size", "24"); tx.setAttribute("font-weight", "800"); tx.setAttribute("fill", "#1d1700");
+    tx.textContent = t.name.split(" ").filter(Boolean).map(w => w[0]).slice(0, 2).join("");
+    head.append(tx);
+  }
+  if (station === "maintenance") {
+    head.insertAdjacentHTML("beforeend", `<path d="M112,68 Q112,20 160,18 Q208,20 208,68Z" fill="#f6b800"/><rect x="100" y="64" width="120" height="9" rx="4.5" fill="#d99a00"/><rect x="153" y="20" width="14" height="42" fill="#ffd45a" opacity=".75"/>`);
+  }
+  head.insertAdjacentHTML("beforeend", `<circle cx="${hx}" cy="${hy}" r="${R + 1.5}" fill="none" stroke="#fff" stroke-width="3"/>`);
+  return svg;
+}
+$("teamIntro").textContent = C.teamIntro;
+C.team.forEach((t, i) => {
   $("teamList").append(el("li", {}, [
-    (() => { const s = el("span", { class: "avatar" });
-      const src = t.photo ? (IMG[t.photo] || t.photo) : "";
-      if (src) s.append(el("img", { src, alt: t.name })); else { s.setAttribute("aria-hidden", "true"); s.textContent = initials; }
-      return s; })(),
-    el("span", {}, [el("b", { text: t.name }), el("small", { text: t.role })])
+    buildScene(t, i),
+    el("div", { class: "member" }, [el("b", { text: t.name }), el("span", { class: "chip", text: t.role }), el("p", { text: t.task || "" })])
   ]));
 });
+/* ---------- animated floor plan ---------- */
+(function floorPlan() {
+  const W = 800, H = 520, T = 66, SPEED = 80;
+  const svg = $("plan"), layer = $("bubbles");
+  $("wsIntro").textContent = C.workspaceIntro;
+
+  /* static room */
+  const chip = (x, y, w, t) => `<g><rect x="${x - w / 2}" y="${y - 11}" width="${w}" height="22" rx="11" fill="#fff" opacity=".9"/><text x="${x}" y="${y + 4}" text-anchor="middle" font-size="12" font-weight="700" fill="#0f4c4f" font-family="Figtree,sans-serif">${t}</text></g>`;
+  const tray = (x, y, w, hh) => `<rect x="${x}" y="${y}" width="${w}" height="${hh}" rx="4" fill="#c99a63" stroke="#a97a46" stroke-width="2"/><rect x="${x + 5}" y="${y + 5}" width="${w - 10}" height="${hh - 10}" rx="2" fill="#cfd6d9"/>`;
+  let eggs = ""; for (let r = 0; r < 2; r++) for (let c = 0; c < 6; c++) eggs += `<ellipse cx="${68 + c * 18}" cy="${402 + r * 22}" rx="7" ry="8.5" fill="#f4e3c8"/>`;
+  svg.innerHTML = `
+  <defs><pattern id="tile" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="#e6efec"/><path d="M40 0H0V40" fill="none" stroke="#d3e1dd" stroke-width="1.5"/></pattern></defs>
+  <rect width="800" height="520" fill="#9db5b0"/>
+  <rect x="20" y="20" width="760" height="480" fill="url(#tile)"/>
+  <rect x="20" y="20" width="760" height="480" fill="none" stroke="#0f4c4f" stroke-width="10"/>
+  <rect x="690" y="493" width="72" height="14" fill="#e6efec"/>
+  <path d="M692,498 L692,430" stroke="#a97a46" stroke-width="5"/><path d="M692,430 A68,68 0 0 1 760,498" stroke="#0f4c4f" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+  <rect x="702" y="466" width="52" height="24" rx="4" fill="#0f4c4f" opacity=".16"/>
+  ${chip(640, 478, 66, "Entrance")}
+
+  <rect x="70" y="60" width="170" height="48" rx="4" fill="#c99a63" stroke="#a97a46" stroke-width="3"/>
+  <rect x="128" y="68" width="52" height="32" rx="3" fill="#6c7f80"/><rect x="132" y="71" width="44" height="22" rx="2" fill="#e8f6f6"/><rect class="cur" x="137" y="77" width="3" height="9" fill="#0f4c4f"/>
+  <circle cx="208" cy="84" r="8" fill="#fff" stroke="#9fb3b3"/><circle cx="208" cy="84" r="4.5" fill="#7a4b2a"/>
+  <circle cx="275" cy="82" r="15" fill="#2f8f5a"/><circle cx="275" cy="82" r="8" fill="#47b77a"/>
+  <circle cx="150" cy="134" r="16" fill="#0f4c4f" opacity=".8"/>
+  ${chip(150, 40, 66, "Office")}
+
+  <rect x="560" y="60" width="170" height="48" rx="4" fill="#c99a63" stroke="#a97a46" stroke-width="3"/>
+  <rect x="578" y="66" width="30" height="36" fill="#fff" stroke="#9fb3b3"/><path d="M583,74H603M583,80H603M583,86H598" stroke="#9fb3b3" stroke-width="2"/>
+  <rect x="616" y="70" width="30" height="32" fill="#fff" stroke="#9fb3b3" transform="rotate(8 631 86)"/>
+  <circle cx="700" cy="84" r="9" fill="#f6b800"/><circle cx="700" cy="84" r="4" fill="#fff6d1"/>
+  <circle cx="640" cy="134" r="16" fill="#0f4c4f" opacity=".8"/>
+  <rect x="742" y="60" width="28" height="104" rx="3" fill="#9fb3b3" stroke="#6c7f80" stroke-width="2"/><path d="M742,95H770M742,130H770" stroke="#6c7f80" stroke-width="2"/>
+  ${chip(640, 40, 104, "Documentation")}
+
+  <rect x="300" y="280" width="80" height="80" rx="6" fill="#26343a"/>
+  <circle class="pgear" cx="340" cy="320" r="17" fill="none" stroke="#f6b800" stroke-width="8" stroke-dasharray="6 4"/><circle cx="340" cy="320" r="7" fill="#26343a"/>
+  <circle cx="314" cy="294" r="4" fill="#6ee7a0" class="spark"/>
+  ${tray(430, 256, 84, 34)}${tray(530, 256, 84, 34)}${tray(430, 332, 84, 34)}${tray(530, 332, 84, 34)}${tray(630, 288, 78, 44)}
+  <rect x="380" y="292" width="248" height="38" fill="#26343a"/><rect x="380" y="297" width="248" height="28" fill="#1d6b3a"/>
+  <line class="belt2" x1="384" y1="311" x2="624" y2="311" stroke="#0e4a27" stroke-width="18" stroke-dasharray="10 10"/>
+  <rect x="456" y="286" width="10" height="8" fill="#26343a"/><rect x="456" y="328" width="10" height="8" fill="#26343a"/><rect x="540" y="286" width="10" height="8" fill="#26343a"/><rect x="540" y="328" width="10" height="8" fill="#26343a"/>
+  <g class="egg2"><ellipse cx="394" cy="311" rx="7" ry="9" fill="#f1d9b5"/></g>
+  <rect x="600" y="404" width="52" height="28" rx="4" fill="#f6b800" stroke="#c99200" stroke-width="2"/><rect x="618" y="398" width="16" height="8" rx="3" fill="none" stroke="#10292b" stroke-width="3"/>
+  ${chip(450, 478, 128, "Prototype station")}
+
+  <rect x="40" y="380" width="190" height="86" rx="6" fill="#c99a63" stroke="#a97a46" stroke-width="3"/>
+  <rect x="54" y="390" width="124" height="52" rx="4" fill="#e0d6c3"/>${eggs}
+  <rect x="188" y="392" width="30" height="44" rx="3" fill="#fff" stroke="#9fb3b3"/><path d="M193,402H213M193,410H213M193,418H208" stroke="#9fb3b3" stroke-width="2"/>
+  <circle cx="200" cy="452" r="8" fill="rgba(220,240,255,.6)" stroke="#10292b" stroke-width="2.5"/>
+  ${chip(135, 484, 100, "Audit table")}
+  <g id="chars"></g>`;
+
+  /* people */
+  const find = (...st) => C.team.findIndex(m => st.includes(m.station));
+  const WHO = { lira: find("laptop", "office"), jhon: find("maintenance"), jomhar: find("audit"), eloisa: find("docs") };
+  const HOME = { lira: [150, 135], jomhar: [135, 355], eloisa: [640, 135], jhon: [350, 385] };
+
+  /* choreography: walk = list of points, until = wait until this second, look = face a point */
+  const PLAN = {
+    lira: [
+      { until: 8 }, { walk: [[150, 222], [190, 222]] }, { look: [235, 222] }, { until: 17.4 },
+      { walk: [[265, 222], [265, 315]] }, { look: [265, 360] }, { until: 29.3 },
+      { walk: [[265, 222], [150, 222], [150, 135]] }, { look: [150, 60] }, { until: 44 },
+      { walk: [[150, 222], [290, 222]] }, { look: [330, 222] }, { until: 60 },
+      { walk: [[150, 222], [150, 135]] }, { look: [150, 60] }
+    ],
+    jomhar: [
+      { until: 6.5 }, { walk: [[235, 355], [235, 222]] }, { look: [190, 222] }, { until: 17.4 },
+      { walk: [[455, 222]] }, { look: [505, 222] }, { until: 30 },
+      { walk: [[235, 222], [235, 355], [135, 355]] }, { look: [135, 420] }, { until: 41.5 },
+      { walk: [[235, 355], [235, 222], [372, 222]] }, { look: [330, 222] }, { until: 60 },
+      { walk: [[235, 222], [235, 355], [135, 355]] }, { look: [135, 420] }
+    ],
+    eloisa: [
+      { until: 17.4 }, { walk: [[640, 222], [505, 222]] }, { look: [455, 222] }, { until: 30 },
+      { walk: [[640, 222], [640, 135]] }, { look: [640, 60] }, { until: 41.5 },
+      { walk: [[640, 222], [330, 222], [330, 190]] }, { look: [330, 222] }, { until: 60 },
+      { walk: [[330, 222], [640, 222], [640, 135]] }, { look: [640, 60] }
+    ],
+    jhon: [
+      { until: 1 }, { walk: [[560, 385]] }, { until: 6.5 }, { walk: [[440, 385]] }, { until: 14.5 },
+      { walk: [[265, 385], [265, 360]] }, { look: [265, 315] }, { until: 29.3 },
+      { walk: [[265, 385], [350, 385]] }, { until: 33 }, { walk: [[560, 385]] }, { until: 38 },
+      { walk: [[450, 385]] }, { until: 43 },
+      { walk: [[265, 385], [265, 254], [330, 254]] }, { look: [330, 222] }, { until: 60 },
+      { walk: [[265, 254], [265, 385], [350, 385]] }
+    ]
+  };
+  /* what they say: [who, start second, end second, text] */
+  const TALK = [
+    ["lira", 10, 13.3, "Hi Jomhar! Ready for the audit?"],
+    ["jomhar", 13.6, 16.9, "Yes, I'm checking the egg trays now."],
+    ["lira", 20, 23.2, "Jhon, is the conveyor running well?"],
+    ["jhon", 23.5, 26.8, "Yes! I just tightened the rollers.", "r"],
+    ["lira", 27, 29, "Great, I'll log it."],
+    ["eloisa", 21, 24.3, "May I get the test results for my report?"],
+    ["jomhar", 24.6, 27.9, "Sure, the audit sheet is almost done."],
+    ["eloisa", 28, 29.6, "Thanks!"],
+    ["jhon", 48, 51, "The prototype is ready for the demo!", "r"],
+    ["eloisa", 51.3, 54, "Documentation is done too."],
+    ["jomhar", 54.3, 56.5, "Audit passed!", "r"],
+    ["lira", 56.7, 59.6, "Let's present it. Go team!", "l"]
+  ];
+
+  function compile(home, steps) {
+    const segs = []; let t = 0, pos = home.slice(), hd = -90;
+    const stay = to => { if (to > t) { segs.push({ t0: t, t1: to, x0: pos[0], y0: pos[1], x1: pos[0], y1: pos[1], h: hd, mv: 0 }); t = to; } };
+    steps.forEach(s => {
+      if (s.until !== undefined) stay(s.until);
+      else if (s.look) hd = Math.atan2(s.look[1] - pos[1], s.look[0] - pos[0]) * 180 / Math.PI;
+      else if (s.walk) s.walk.forEach(q => {
+        const dx = q[0] - pos[0], dy = q[1] - pos[1], d = Math.hypot(dx, dy); if (!d) return;
+        hd = Math.atan2(dy, dx) * 180 / Math.PI;
+        segs.push({ t0: t, t1: t + d / SPEED, x0: pos[0], y0: pos[1], x1: q[0], y1: q[1], h: hd, mv: 1 }); t += d / SPEED; pos = q.slice();
+      });
+    });
+    stay(T);
+    return segs;
+  }
+  const ROUTES = {}; Object.keys(PLAN).forEach(k => ROUTES[k] = compile(HOME[k], PLAN[k]));
+  function at(k, t) {
+    const s = ROUTES[k]; let g = s[s.length - 1];
+    for (let i = 0; i < s.length; i++) if (t < s[i].t1) { g = s[i]; break; }
+    const p = g.t1 > g.t0 ? Math.min(1, Math.max(0, (t - g.t0) / (g.t1 - g.t0))) : 0;
+    return { x: g.x0 + (g.x1 - g.x0) * p, y: g.y0 + (g.y1 - g.y0) * p, h: g.h, mv: g.mv };
+  }
+
+  /* characters */
+  const NS = "http://www.w3.org/2000/svg", chars = svg.querySelector("#chars"), people = {};
+  Object.keys(WHO).forEach((k, n) => {
+    const m = C.team[WHO[k]]; if (!m) return;
+    const hd = HEADS[m.photo] || { cx: 210, cy: 150, r: 95, outfit: "#1f2f45", skin: "#d9a47c" };
+    const g = document.createElementNS(NS, "g");
+    const kk = 16 / hd.r, src = m.photo ? (IMG[m.photo] || m.photo) : "";
+    const laptop = k === "lira" ? `<rect x="11" y="-9" width="13" height="18" rx="2" fill="#4b5b5e" stroke="#2f3c3e" stroke-width="1.5"/><circle cx="17" cy="0" r="2.5" fill="#f6b800"/>` : "";
+    g.innerHTML = `<ellipse cx="0" cy="6" rx="22" ry="14" fill="rgba(0,0,0,.16)"/>
+      <g class="rot"><ellipse rx="8" ry="17" fill="${hd.outfit}"/><circle class="hl" cx="0" cy="-19" r="5.5" fill="${hd.skin}"/><circle class="hr" cx="0" cy="19" r="5.5" fill="${hd.skin}"/>${laptop}</g>
+      <g class="face"><clipPath id="pc${n}"><circle cx="0" cy="-5" r="16"/></clipPath><circle cx="0" cy="-5" r="19" fill="#fff"/>
+      ${src ? `<image href="${src}" x="${-hd.cx * kk}" y="${-5 - hd.cy * kk}" width="${420 * kk}" height="${420 * kk}" clip-path="url(#pc${n})"/>` : ""}
+      <circle cx="0" cy="-5" r="17.5" fill="none" stroke="${hd.outfit}" stroke-width="2.5"/>
+      ${k === "jhon" ? `<path d="M-16,-12 Q-16,-30 0,-31 Q16,-30 16,-12Z" fill="#f6b800"/><rect x="-19" y="-14" width="38" height="4" rx="2" fill="#d99a00"/>` : ""}</g>
+      <text y="34" text-anchor="middle" font-size="11" font-weight="700" font-family="Figtree,sans-serif" fill="#10292b" stroke="#fff" stroke-width="3" paint-order="stroke">${m.name.split(" ")[0]}</text>`;
+    chars.append(g);
+    const b = document.createElement("div"); b.className = "bubble"; layer.append(b);
+    people[k] = { g, rot: g.querySelector(".rot"), face: g.querySelector(".face"), hl: g.querySelector(".hl"), hr: g.querySelector(".hr"), bub: b, h: 0, ph: 0, x: 0, y: 0 };
+  });
+  const legend = [];
+  Object.keys(people).forEach(k => legend.push(C.team[WHO[k]].name.split(" ")[0] + " (" + C.team[WHO[k]].role.toLowerCase() + ")"));
+  $("planLegend").textContent = legend.join(", ");
+
+  /* clock */
+  let running = !matchMedia("(prefers-reduced-motion: reduce)").matches, visible = true, t0 = performance.now(), offset = running ? 0 : 0, last = performance.now(), frozenAt = 0, force = null;
+  const btn = $("planBtn");
+  function setBtn() { btn.textContent = running ? "Pause animation" : "Play animation"; }
+  setBtn();
+  btn.addEventListener("click", () => {
+    if (running) { frozenAt = (performance.now() - t0) / 1000; running = false; }
+    else { t0 = performance.now() - frozenAt * 1000; running = true; last = performance.now(); }
+    setBtn();
+  });
+  new IntersectionObserver(es => visible = es[0].isIntersecting).observe($("planWrap"));
+
+  function draw(time, dt) {
+    const ct = time % T;
+    Object.keys(people).forEach(k => {
+      const p = people[k], s = at(k, ct);
+      let d = ((s.h - p.h + 540) % 360) - 180; p.h += d * Math.min(1, dt * 10);
+      if (s.mv) p.ph += dt * 11;
+      const sw = s.mv ? Math.sin(p.ph) * 6 : 0, bob = s.mv ? Math.abs(Math.sin(p.ph)) * -2 : 0;
+      p.g.setAttribute("transform", `translate(${s.x.toFixed(1)},${s.y.toFixed(1)})`);
+      p.rot.setAttribute("transform", `rotate(${p.h.toFixed(1)})`);
+      p.hl.setAttribute("cx", sw); p.hr.setAttribute("cx", -sw);
+      p.face.setAttribute("transform", `translate(0,${bob})`);
+      p.x = s.x; p.y = s.y;
+    });
+    const talking = {};
+    TALK.forEach(([k, a, b, txt, side]) => { if (ct >= a && ct < b && people[k]) talking[k] = { txt, side }; });
+    Object.keys(people).forEach(k => {
+      const p = people[k], tk = talking[k];
+      if (tk) {
+        if (p.bub.textContent !== tk.txt) p.bub.textContent = tk.txt;
+        const side = tk.side, dx = side === "r" ? 30 : side === "l" ? -30 : 0;
+        p.bub.style.left = ((p.x + dx) / W * 100) + "%";
+        p.bub.style.top = ((side ? p.y + 4 : p.y - 30) / H * 100) + "%";
+        p.bub.style.transform = side === "r" ? "translate(0,-50%)" : side === "l" ? "translate(-100%,-50%)" : "";
+        p.bub.classList.add("on");
+      }
+      else p.bub.classList.remove("on");
+    });
+  }
+  function frame(now) {
+    const dt = Math.min(.1, (now - last) / 1000); last = now;
+    if (running && visible) draw((now - t0) / 1000, dt);
+    requestAnimationFrame(frame);
+  }
+  draw(running ? 0 : 6, .016);
+  requestAnimationFrame(frame);
+  window.eastPlan = { show: t => { running = false; frozenAt = t; for (let i = 0; i < 30; i++) draw(t, .1); setBtn(); } };
+})();
+
 $("contactText").textContent = C.contactText;
 const mailto = "mailto:" + C.contactEmail + "?subject=" + encodeURIComponent(C.emailSubject);
 const gmail = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(C.contactEmail) + "&su=" + encodeURIComponent(C.emailSubject);
